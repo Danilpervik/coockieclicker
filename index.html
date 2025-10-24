@@ -1,0 +1,140 @@
+Данил, [20.10.2025 8:29]
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Clicker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        #cookie {
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+            transition: transform 0.1s;
+            user-select: none;
+        }
+        
+        #cookie:active {
+            transform: scale(0.95);
+        }
+        
+        #counter {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        
+        .upgrades {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .upgrade {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .upgrade:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cookie Clicker</h1>
+        <div id="counter">Печенек: 0</div>
+        <img id="cookie" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjkwIiBmaWxsPSIjOGI1MTIzIiBzdHJva2U9IiM2YjNhMWIiIHN0cm9rZS13aWR0aD0iMiIvPjxjaXJjbGUgY3g9Ijc1IiBjeT0iODAiIHI9IjEwIiBmaWxsPSIjMDAwIi8+PGNpcmNsZSBjeD0iMTI1IiBjeT0iODAiIHI9IjEwIiBmaWxsPSIjMDAwIi8+PHBhdGggZD0iTTgwIDEyMCBRMTAwIDE0MCAxMjAgMTIwIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNjAiIHI9IjgiIGZpbGw9IiNjMGE0NTAiLz48Y2lyY2xlIGN4PSIxNDAiIGN5PSI3MCIgcj0iMTIiIGZpbGw9IiNjMGE0NTAiLz48Y2lyY2xlIGN4PSI5MCIgY3k9IjE1MCIgcj0iMTAiIGZpbGw9IiNjMGE0NTAiLz48Y2lyY2xlIGN4PSIxMzAiIGN5PSIxMzAiIHI9IjciIGZpbGw9IiNjMGE0NTAiLz48L3N2Zz4=" alt="Печенька">
+        
+        <div class="upgrades">
+            <button class="upgrade" id="autoClicker" onclick="buyAutoClicker()">
+                Автокликер (50 печенек)
+            </button>
+            <button class="upgrade" id="doubleClick" onclick="buyDoubleClick()">
+                Удвоитель (100 печенек)
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let cookies = 0;
+        let clickValue = 1;
+        let autoClickerCount = 0;
+        let autoClickerPrice = 50;
+        let doubleClickPrice = 100;
+        let doubleClickActive = false;
+
+        const cookieElement = document.getElementById('cookie');
+        const counterElement = document.getElementById('counter');
+        const autoClickerButton = document.getElementById('autoClicker');
+        const doubleClickButton = document.getElementById('doubleClick');
+
+        function updateDisplay() {
+            counterElement.textContent = Печенек: ${cookies};
+            autoClickerButton.textContent = Автокликер (${autoClickerPrice} печенек);
+            autoClickerButton.disabled = cookies < autoClickerPrice;
+            
+            doubleClickButton.textContent = doubleClickActive 
+                ? 'Удвоитель (активен)' 
+                : Удвоитель (${doubleClickPrice} печенек);
+            doubleClickButton.disabled = doubleClickActive || cookies < doubleClickPrice;
+        }
+
+        function clickCookie() {
+            cookies += clickValue;
+            updateDisplay();
+        }
+
+Данил, [20.10.2025 8:29]
+function buyAutoClicker() {
+            if (cookies >= autoClickerPrice) {
+                cookies -= autoClickerPrice;
+                autoClickerCount++;
+                autoClickerPrice = Math.floor(autoClickerPrice * 1.5);
+                updateDisplay();
+            }
+        }
+
+        function buyDoubleClick() {
+            if (!doubleClickActive && cookies >= doubleClickPrice) {
+                cookies -= doubleClickPrice;
+                clickValue *= 2;
+                doubleClickActive = true;
+                updateDisplay();
+            }
+        }
+
+        // Автокликеры
+        setInterval(() => {
+            cookies += autoClickerCount;
+            updateDisplay();
+        }, 1000);
+
+        cookieElement.addEventListener('click', clickCookie);
+        updateDisplay();
+    </script>
+</body>
+</html>
