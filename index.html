@@ -39,6 +39,12 @@
             margin: 20px 0;
         }
         
+        .stats {
+            font-size: 16px;
+            margin: 10px 0;
+            color: #666;
+        }
+        
         .upgrades {
             display: flex;
             justify-content: center;
@@ -66,6 +72,10 @@
     <div class="container">
         <h1>Cookie Clicker</h1>
         <div id="counter">Печенек: 0</div>
+        <div class="stats" id="stats">
+            Клик дает: 1 печеньку<br>
+            Автокликеров: 0
+        </div>
         <img id="cookie" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjkwIiBmaWxsPSIjOGI1MTIzIiBzdHJva2U9IiM2YjNhMWIiIHN0cm9rZS13aWR0aD0iMiIvPjxjaXJjbGUgY3g9Ijc1IiBjeT0iODAiIHI9IjEwIiBmaWxsPSIjMDAwIi8+PGNpcmNsZSBjeD0iMTI1IiBjeT0iODAiIHI9IjEwIiBmaWxsPSIjMDAwIi8+PHBhdGggZD0iTTgwIDEyMCBRMTAwIDE0MCAxMjAgMTIwIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMyIgZmlsbD0ibm9uZSIvPjxjaXJjbGUgY3g9IjYwIiBjeT0iNjAiIHI9IjgiIGZpbGw9IiNjMGE0NTAiLz48Y2lyY2xlIGN4PSIxNDAiIGN5PSI3MCIgcj0iMTIiIGZpbGw9IiNjMGE0NTAiLz48Y2lyY2xlIGN4PSI5MCIgY3k9IjE1MCIgcj0iMTAiIGZpbGw9IiNjMGE0NTAiLz48Y2lyY2xlIGN4PSIxMzAiIGN5PSIxMzAiIHI9IjciIGZpbGw9IiNjMGE0NTAiLz48L3N2Zz4=" alt="Печенька">
         
         <div class="upgrades">
@@ -88,17 +98,20 @@
 
         const cookieElement = document.getElementById('cookie');
         const counterElement = document.getElementById('counter');
+        const statsElement = document.getElementById('stats');
         const autoClickerButton = document.getElementById('autoClicker');
         const doubleClickButton = document.getElementById('doubleClick');
 
         function updateDisplay() {
-            counterElement.textContent = Печенек: ${cookies};
-            autoClickerButton.textContent = Автокликер (${autoClickerPrice} печенек);
+            counterElement.textContent = `Печенек: ${cookies}`;
+            statsElement.innerHTML = `Клик дает: ${clickValue} печеньку<br>Автокликеров: ${autoClickerCount}`;
+            
+            autoClickerButton.textContent = `Автокликер (${autoClickerPrice} печенек)`;
             autoClickerButton.disabled = cookies < autoClickerPrice;
             
             doubleClickButton.textContent = doubleClickActive 
                 ? 'Удвоитель (активен)' 
-                : Удвоитель (${doubleClickPrice} печенек);
+                : `Удвоитель (${doubleClickPrice} печенек)`;
             doubleClickButton.disabled = doubleClickActive || cookies < doubleClickPrice;
         }
 
@@ -107,8 +120,7 @@
             updateDisplay();
         }
 
-Данил, [20.10.2025 8:29]
-function buyAutoClicker() {
+        function buyAutoClicker() {
             if (cookies >= autoClickerPrice) {
                 cookies -= autoClickerPrice;
                 autoClickerCount++;
